@@ -1,0 +1,11 @@
+theme = "Tomorrow Night Burns"
+background = #000000
+font-family = "Meslo LG S DZ Regular"
+shell-integration-features = no-cursor
+cursor-style = block 
+
+mouse-hide-while-typing = true
+background-opacity = 0.89
+background-blur = true
+window-decoration = server
+
