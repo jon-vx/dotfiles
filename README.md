@@ -1,7 +1,7 @@
 # dotfiles
 
 **NOTE**
-- remove -<app> when placing into proper directory
+- remove -app when placing into proper directory
 
 ## Software
 - Terminal: Ghostty
