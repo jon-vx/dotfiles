@@ -1,11 +1,40 @@
-theme = "Tomorrow Night Burns"
-background = #000000
-font-family = "Meslo LG S DZ Regular"
+# Domino Still Life
+background = #0c0c0c
+foreground = #e6e6e6
+selection-background = #2f3549
+selection-foreground = #ffffff
+cursor-color = #d0aa56
+
+# black / shadow
+palette = 0=#17160f
+palette = 8=#4a4634
+# red / dark wood
+palette = 1=#7b3428
+palette = 9=#c05a3e
+# green / old olive
+palette = 2=#687244
+palette = 10=#a0aa6b
+# yellow / aged brass
+palette = 3=#9b7632
+palette = 11=#d0aa56
+# blue / cold stone
+palette = 4=#58675f
+palette = 12=#8aa09a
+# magenta / muted wine
+palette = 5=#74515a
+palette = 13=#b27a86
+# cyan / oxidized brass
+palette = 6=#6f7f69
+palette = 14=#a3b89b
+# white / paper / bone
+palette = 7=#c8bd98
+palette = 15=#f3ead0
+
+font-family = JetBrainsMono Nerd Font
 shell-integration-features = no-cursor
-cursor-style = block 
+cursor-style = block
 
 mouse-hide-while-typing = true
-background-opacity = 0.89
+background-opacity = 0.96
 background-blur = true
 window-decoration = server
-

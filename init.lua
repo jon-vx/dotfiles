@@ -1,8 +1,17 @@
+print("hello")
+
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 vim.g.have_nerd_font = false
 vim.g.python3_host_prog = vim.fn.expand("~/.config/nvim/venv/nvim-python/bin/python3")
+
+vim.o.autoread = true
+
+-- Actually trigger autoread when focus/buffer changes
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold" }, {
+	command = "checktime",
+})
 
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
@@ -435,20 +444,7 @@ require("lazy").setup({
 		end,
 	},
 
-	{
-		"ficcdaf/ashen.nvim",
-		priority = 1000,
-		init = function()
-			vim.cmd.colorscheme("ashen")
-			vim.cmd.hi("Comment gui=none")
-			vim.cmd([[
-        highlight Normal guibg=NONE ctermbg=NONE
-        highlight NonText guibg=NONE ctermbg=NONE
-        highlight LineNr guibg=NONE ctermbg=NONE
-        highlight SignColumn guibg=NONE ctermbg=NONE
-    ]])
-		end,
-	},
+	-- Domino Still Life palette is applied inline at the bottom of this file
 
 	{
 		"folke/todo-comments.nvim",
@@ -523,3 +519,216 @@ require("lazy").setup({
 		},
 	},
 })
+
+-- Editor colors: Domino Still Life
+local C = {
+	bg = "#0c0c0c",
+	fg = "#e6e6e6",
+
+	shadow = "#17160f",
+	shadow_bright = "#4a4634",
+
+	wood = "#7b3428",
+	wood_bright = "#c05a3e",
+
+	olive = "#687244",
+	olive_bright = "#a0aa6b",
+
+	brass = "#9b7632",
+	brass_bright = "#d0aa56",
+
+	stone = "#58675f",
+	stone_bright = "#8aa09a",
+
+	wine = "#74515a",
+	wine_bright = "#b27a86",
+
+	oxid = "#6f7f69",
+	oxid_bright = "#a3b89b",
+
+	paper = "#c8bd98",
+	bone = "#f3ead0",
+
+	selection = "#2f3549",
+	comment = "#7f8466",
+	muted = "#6f6a52",
+	panel = "#15140f",
+	panel_soft = "#1d1b13",
+}
+
+local function hl(group, opts)
+	vim.api.nvim_set_hl(0, group, opts)
+end
+
+local function apply_editor_highlights()
+	local transparent_groups = {
+		"Normal",
+		"NormalNC",
+		"NormalFloat",
+		"SignColumn",
+		"EndOfBuffer",
+		"LineNr",
+		"FoldColumn",
+		"StatusLine",
+		"StatusLineNC",
+	}
+
+	for _, group in ipairs(transparent_groups) do
+		hl(group, { bg = "NONE" })
+	end
+
+	hl("Normal", { fg = C.fg, bg = "NONE" })
+	hl("NormalNC", { fg = C.fg, bg = "NONE" })
+	hl("NormalFloat", { fg = C.fg, bg = "NONE" })
+	hl("FloatBorder", { fg = C.brass, bg = "NONE" })
+	hl("WinBar", { fg = C.paper, bg = "NONE" })
+	hl("WinBarNC", { fg = C.muted, bg = "NONE" })
+	hl("StatusLine", { fg = C.paper, bg = "NONE" })
+	hl("StatusLineNC", { fg = C.muted, bg = "NONE" })
+
+	hl("CursorLine", { bg = "#15140f" })
+	hl("CursorLineNr", { fg = C.brass_bright, bold = true })
+	hl("LineNr", { fg = C.shadow_bright })
+	hl("SignColumn", { bg = "NONE" })
+	hl("ColorColumn", { bg = C.panel })
+
+	hl("Visual", { fg = C.bone, bg = C.selection })
+	hl("Search", { fg = C.shadow, bg = C.brass_bright })
+	hl("IncSearch", { fg = C.shadow, bg = C.wood_bright })
+
+	hl("Pmenu", { fg = C.fg, bg = C.panel })
+	hl("PmenuSel", { fg = C.bone, bg = C.selection, bold = true })
+	hl("PmenuSbar", { bg = C.panel_soft })
+	hl("PmenuThumb", { bg = C.brass })
+
+	hl("TermNormal", { fg = C.fg, bg = "#1a1811" })
+	hl("TermNormalNC", { fg = C.fg, bg = "#1a1811" })
+
+	hl("Comment", { fg = C.comment, italic = true })
+	hl("String", { fg = C.olive_bright })
+	hl("Character", { fg = C.olive_bright })
+	hl("Number", { fg = C.brass_bright })
+	hl("Boolean", { fg = C.wood_bright, bold = true })
+	hl("Float", { fg = C.brass_bright })
+	hl("Function", { fg = C.stone_bright, bold = true })
+	hl("Identifier", { fg = C.fg })
+	hl("Keyword", { fg = C.brass_bright, bold = true, italic = true })
+	hl("Statement", { fg = C.brass_bright, bold = true })
+	hl("Conditional", { fg = C.brass_bright, bold = true })
+	hl("Repeat", { fg = C.brass_bright, bold = true })
+	hl("Operator", { fg = C.paper })
+	hl("Type", { fg = C.oxid_bright, italic = true })
+	hl("Constant", { fg = C.paper })
+	hl("Special", { fg = C.wine_bright })
+	hl("PreProc", { fg = C.wine_bright })
+	hl("Todo", { fg = C.shadow, bg = C.brass_bright, bold = true })
+
+	hl("DiagnosticError", { fg = C.wood_bright })
+	hl("DiagnosticWarn", { fg = C.brass_bright })
+	hl("DiagnosticInfo", { fg = C.stone_bright })
+	hl("DiagnosticHint", { fg = C.oxid_bright })
+	hl("DiagnosticOk", { fg = C.olive_bright })
+
+	local syntax_groups = {
+		["@comment"] = { fg = C.comment, italic = true },
+		["@keyword"] = { fg = C.brass_bright, bold = true, italic = true },
+		["@keyword.function"] = { fg = C.brass_bright, bold = true },
+		["@keyword.return"] = { fg = C.wood_bright, bold = true },
+		["@keyword.conditional"] = { fg = C.brass_bright, bold = true },
+		["@keyword.repeat"] = { fg = C.brass_bright, bold = true },
+		["@function"] = { fg = C.stone_bright, bold = true },
+		["@function.call"] = { fg = C.stone_bright },
+		["@function.method"] = { fg = C.stone_bright },
+		["@method"] = { fg = C.stone_bright },
+		["@constructor"] = { fg = C.brass_bright, bold = true },
+		["@type"] = { fg = C.oxid_bright },
+		["@type.builtin"] = { fg = C.oxid_bright, italic = true },
+		["@string"] = { fg = C.olive_bright },
+		["@string.escape"] = { fg = C.brass_bright },
+		["@number"] = { fg = C.brass_bright },
+		["@boolean"] = { fg = C.wood_bright, bold = true },
+		["@constant"] = { fg = C.paper },
+		["@constant.builtin"] = { fg = C.wood_bright, bold = true },
+		["@variable"] = { fg = C.fg },
+		["@variable.builtin"] = { fg = C.wine_bright, italic = true },
+		["@variable.member"] = { fg = C.wine_bright },
+		["@property"] = { fg = C.wine_bright },
+		["@operator"] = { fg = C.paper },
+		["@punctuation.delimiter"] = { fg = C.muted },
+		["@punctuation.bracket"] = { fg = C.paper },
+		["@punctuation.special"] = { fg = C.brass },
+		["@tag"] = { fg = C.wood_bright },
+		["@tag.attribute"] = { fg = C.brass_bright, italic = true },
+		["@tag.delimiter"] = { fg = C.muted },
+		["@markup.heading"] = { fg = C.brass_bright, bold = true },
+		["@markup.link"] = { fg = "#88c0d0", underline = true },
+		["@markup.raw"] = { fg = C.olive_bright },
+		["@markup.list"] = { fg = C.wood_bright },
+
+		RainbowDelimiterRed = { fg = C.wood_bright },
+		RainbowDelimiterOrange = { fg = C.brass },
+		RainbowDelimiterYellow = { fg = C.brass_bright },
+		RainbowDelimiterGreen = { fg = C.olive_bright },
+		RainbowDelimiterCyan = { fg = C.oxid_bright },
+		RainbowDelimiterBlue = { fg = C.stone_bright },
+		RainbowDelimiterViolet = { fg = C.wine_bright },
+	}
+
+	for group, opts in pairs(syntax_groups) do
+		hl(group, opts)
+	end
+
+	hl("TelescopeNormal", { fg = C.fg, bg = "NONE" })
+	hl("TelescopeBorder", { fg = C.brass, bg = "NONE" })
+	hl("TelescopePromptBorder", { fg = C.brass_bright, bg = "NONE" })
+	hl("TelescopePromptTitle", { fg = C.shadow, bg = C.brass_bright, bold = true })
+	hl("TelescopeSelection", { fg = C.bone, bg = C.selection, bold = true })
+	hl("TelescopeMatching", { fg = C.brass_bright, bold = true })
+
+	local tree_groups = {
+		NvimTreeNormal = { fg = C.fg, bg = "NONE" },
+		NvimTreeNormalNC = { fg = C.fg, bg = "NONE" },
+		NvimTreeEndOfBuffer = { fg = C.shadow, bg = "NONE" },
+		NvimTreeWinSeparator = { fg = C.shadow_bright, bg = "NONE" },
+		NvimTreeCursorLine = { bg = C.panel },
+		NvimTreeLineNr = { fg = C.shadow_bright },
+		NvimTreeRootFolder = { fg = C.brass_bright, bold = true },
+		NvimTreeFolderName = { fg = C.oxid_bright },
+		NvimTreeOpenedFolderName = { fg = C.stone_bright, bold = true },
+		NvimTreeEmptyFolderName = { fg = C.muted, italic = true },
+		NvimTreeFolderIcon = { fg = C.oxid_bright },
+		NvimTreeOpenedFolderIcon = { fg = C.stone_bright },
+		NvimTreeFileIcon = { fg = C.fg },
+		NvimTreeSymlink = { fg = C.oxid_bright, italic = true },
+		NvimTreeExecFile = { fg = C.stone_bright, bold = true },
+		NvimTreeSpecialFile = { fg = C.wine_bright, italic = true },
+		NvimTreeImageFile = { fg = C.wine_bright },
+		NvimTreeMarkdownFile = { fg = C.olive_bright },
+		NvimTreeIndentMarker = { fg = C.shadow_bright },
+		NvimTreeGitDirty = { fg = C.brass_bright },
+		NvimTreeGitStaged = { fg = C.olive_bright },
+		NvimTreeGitMerge = { fg = C.wine_bright },
+		NvimTreeGitRenamed = { fg = C.oxid_bright },
+		NvimTreeGitNew = { fg = C.olive_bright },
+		NvimTreeGitDeleted = { fg = C.wood_bright },
+		NvimTreeGitIgnored = { fg = C.muted, italic = true },
+		NvimTreeDiagnosticError = { fg = C.wood_bright },
+		NvimTreeDiagnosticWarn = { fg = C.brass_bright },
+		NvimTreeDiagnosticInfo = { fg = C.stone_bright },
+		NvimTreeDiagnosticHint = { fg = C.oxid_bright },
+	}
+
+	for group, opts in pairs(tree_groups) do
+		hl(group, opts)
+	end
+
+	hl("AlphaHeader", { fg = C.brass })
+	hl("AlphaButtons", { fg = C.paper })
+	hl("AlphaShortcut", { fg = C.wood_bright, bold = true })
+	hl("AlphaFooter", { fg = C.olive_bright, italic = true })
+end
+
+vim.api.nvim_create_autocmd("ColorScheme", {
+	callback = apply_editor_highlights,
+})
+apply_editor_highlights()

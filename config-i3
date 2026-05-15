@@ -1,6 +1,6 @@
-	
-exec_always feh --bg-fill ~/Pictures/alpine-glow.jpg
 set $mod Mod1
+
+exec_always --no-startup-id xsetroot -cursor_name left_ptr
 
 exec --no-startup-id autorandr --change
 exec --no-startup-id xrandr \
