@@ -31,4 +31,4 @@ fi
 . "$HOME/.cargo/env"
 
 # opam configuration
-test -r /home/stellz/.opam/opam-init/init.sh && . /home/stellz/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
+test -r "$HOME/.opam/opam-init/init.sh" && . "$HOME/.opam/opam-init/init.sh" > /dev/null 2> /dev/null || true
