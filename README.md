@@ -1,6 +1,8 @@
 # dotfiles
 
-Mirrors `$HOME` — clone or symlink files into place.
+Layout:
+- Dot-prefixed files (`.bashrc`, `.gitconfig`, ...) symlink into `~/`
+- Other directories (`i3/`, `nvim/`, ...) symlink into `~/.config/`
 
 ## Software
 - Terminal: Ghostty
