@@ -7,3 +7,4 @@
 - Terminal: Ghostty
 - Text Editor: Nvim
 - Window Manager: i3 
+- Launcher: fuzzel
