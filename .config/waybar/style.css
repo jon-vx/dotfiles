@@ -1,0 +1,101 @@
+@define-color background #0a0a0a;
+@define-color foreground #e6e6e6;
+@define-color muted      #888888;
+
+* {
+    background-color: alpha(@background, 0.9);
+    color: @foreground;
+
+    border: none;
+    border-radius: 0;
+
+    min-height: 0;
+
+    font-family: "JetBrainsMono Nerd Font", "Ubuntu Mono", monospace;
+    font-size: 12px;
+}
+
+window#waybar {
+    background-color: alpha(@background, 0.9);
+    color: @foreground;
+}
+
+.modules-left  { margin-left:  8px; }
+.modules-right { margin-right: 8px; }
+
+#workspaces button {
+    all: initial;
+    color: @foreground;
+    transition: all 90ms ease-in-out;
+    padding: 0 6px;
+    margin: 0;
+    min-width: 2px;
+}
+
+#workspaces button.focused,
+#workspaces button.visible {
+    border-top: 1px solid @foreground;
+    margin-bottom: 2px;
+}
+
+#workspaces button.urgent {
+    color: #ef4444;
+    border-top: 1px solid #ef4444;
+}
+
+#workspaces button:not(.focused):not(.visible) {
+    opacity: 0.5;
+}
+
+#mode {
+    color: #fbbf24;
+    margin: 0 6px;
+}
+
+#window {
+    color: @muted;
+}
+
+#custom-sep {
+    color: @muted;
+    margin: 0 4px;
+}
+
+#clock,
+#cpu,
+#memory,
+#battery,
+#network,
+#pulseaudio,
+#idle_inhibitor {
+    margin: 0 3px;
+}
+
+#idle_inhibitor.activated {
+    color: #fbbf24;
+}
+
+#idle_inhibitor.deactivated {
+    color: @muted;
+}
+
+#custom-dnd {
+    margin: 0 3px;
+}
+
+#custom-dnd.on {
+    color: #ef4444;
+}
+
+#custom-dnd.off {
+    color: @muted;
+}
+
+#battery.warning  { color: #fbbf24; }
+#battery.critical { color: #ef4444; }
+#battery.charging { color: #34d399; }
+
+#network.disconnected,
+#pulseaudio.muted {
+    color: @muted;
+}

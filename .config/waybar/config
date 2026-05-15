@@ -1,0 +1,111 @@
+{
+    "reload_style_on_change": true,
+    "layer": "top",
+    "position": "bottom",
+    "height": 26,
+    "spacing": 0,
+
+    "modules-left": ["sway/workspaces", "custom/sep", "sway/mode"],
+    "modules-center": ["custom/cat"],
+    "modules-right": ["custom/dnd", "idle_inhibitor", "custom/sep", "network", "custom/sep", "cpu", "memory", "custom/sep", "battery", "custom/sep", "pulseaudio", "clock"],
+
+    "sway/workspaces": {
+        "disable-scroll": true,
+        "all-outputs": false,
+        "format": "{icon}",
+        "format-icons": {
+            "1": "I",
+            "2": "II",
+            "3": "III",
+            "4": "IV",
+            "5": "V",
+            "6": "VI",
+            "7": "VII",
+            "8": "VIII",
+            "9": "IX",
+            "10": "X",
+            "default": "·"
+        }
+    },
+
+    "sway/window": {
+        "max-length": 60,
+        "format": "{title}"
+    },
+
+    "custom/cat": {
+        "format": "=^.^=",
+        "tooltip": false
+    },
+
+    "custom/dnd": {
+        "exec": "if makoctl mode | grep -q do-not-disturb; then echo '{\"text\":\"[󰂛 DND]\",\"class\":\"on\",\"tooltip\":\"Do Not Disturb is ON — click to enable notifications\"}'; else echo '{\"text\":\"[󰂚]\",\"class\":\"off\",\"tooltip\":\"Notifications normal — click to enable DND\"}'; fi",
+        "return-type": "json",
+        "on-click": "if makoctl mode | grep -q do-not-disturb; then makoctl mode -r do-not-disturb; else makoctl mode -a do-not-disturb; fi; pkill -RTMIN+11 waybar",
+        "interval": "once",
+        "signal": 11
+    },
+
+    "idle_inhibitor": {
+        "format": "[{icon}]",
+        "format-icons": {
+            "activated": "󰈈 AWAKE",
+            "deactivated": "󰈉"
+        },
+        "tooltip-format-activated": "Idle inhibited — screen will stay on",
+        "tooltip-format-deactivated": "Idle normal — screen will blank"
+    },
+
+    "custom/sep": {
+        "format": "︱",
+        "tooltip": false
+    },
+
+    "clock": {
+        "format": "[{:%a %b %d  %I:%M %p}]",
+        "format-alt": "[{:%I:%M %p}]",
+        "tooltip": false
+    },
+
+    "cpu": {
+        "format": "[CPU {usage}%]",
+        "interval": 5
+    },
+
+    "memory": {
+        "format": "[MEM {}%]",
+        "interval": 5
+    },
+
+    "battery": {
+        "format": "[{icon} {capacity}%]",
+        "format-charging": "[󰂄 {capacity}%]",
+        "format-full": "[󰂅 FULL]",
+        "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+        "interval": 30,
+        "states": {
+            "warning": 20,
+            "critical": 10
+        }
+    },
+
+    "network": {
+        "format-wifi": "[{icon} {signalStrength}%]",
+        "format-ethernet": "[󰈀 ETH]",
+        "format-disconnected": "[󰤮 OFF]",
+        "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
+        "interval": 5,
+        "tooltip-format": "{essid}  {ifname}: {ipaddr}"
+    },
+
+    "pulseaudio": {
+        "format": "[{icon} {volume}%]",
+        "format-muted": "[󰝟 MUTE]",
+        "format-icons": {
+            "default": ["󰕿", "󰖀", "󰕾"],
+            "headphone": "󰋋"
+        },
+        "scroll-step": 5,
+        "on-click": "pavucontrol"
+    }
+}

@@ -1,10 +1,13 @@
 # dotfiles
 
-**NOTE**
-- remove -<app> when placing into proper directory
+Mirrors `$HOME` — clone or symlink files into place.
 
 ## Software
 - Terminal: Ghostty
 - Text Editor: Nvim
-- Window Manager: i3 
+- Window Managers: i3 (X11), sway (Wayland)
+- Bar: waybar
+- Notifications: mako
 - Launcher: fuzzel
+- Multiplexer: tmux
+- Shell: bash
