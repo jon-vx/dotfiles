@@ -6,6 +6,6 @@
 	helper = !/usr/bin/gh auth git-credential
 [user]
 	name = jvx
-	email = 190533585+jon-vx@users.noreply.github.com
+	email = jonvx0@gmail.com
 [init]
 	defaultBranch = main
